@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.qingshu.school.mapper.SchoolMapper">
+	 <resultMap id="BaseResultMap" type="com.qingshu.school.entity.School" >
+	    <id column="id" property="id" jdbcType="INTEGER" />
+	    <result column="name" property="name" jdbcType="VARCHAR" />
+	    <result column="symbol" property="symbol" jdbcType="VARCHAR" />
+	    <result column="category_id" property="categoryId" jdbcType="INTEGER" />
+	    <result column="category_type" property="categoryType" jdbcType="INTEGER" />
+	    <result column="phone" property="phone" jdbcType="VARCHAR" />
+	    <result column="email" property="email" jdbcType="VARCHAR" />
+	    <result column="alipay_email" property="alipayEmail" jdbcType="VARCHAR" />
+	    <result column="address" property="address" jdbcType="VARCHAR" />
+	    <result column="logo_url" property="logoUrl" jdbcType="VARCHAR" />
+	    <result column="certi_info_url" property="certiInfoUrl" jdbcType="VARCHAR" />
+	    <result column="banner_image_ids" property="bannerImageIds" jdbcType="VARCHAR" />
+	    <result column="status" property="status" jdbcType="INTEGER" />
+	    <result column="appler_id" property="applerId" jdbcType="INTEGER" />
+	    <result column="apply_time" property="applyTime" jdbcType="TIMESTAMP" />
+	    <result column="updater_id" property="updaterId" jdbcType="INTEGER" />
+	    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+	  </resultMap>
+	  <resultMap id="ResultMapWithBLOBs" type="com.qingshu.school.entity.School" extends="BaseResultMap" >
+	    <result column="introduction" property="introduction" jdbcType="LONGVARCHAR" />
+	    <result column="introduction_detail" property="introductionDetail" jdbcType="LONGVARCHAR" />
+	  </resultMap>
+
+
+	<select id="selectAllSchool"  resultType="School">
+		select * from school
+	</select>
+	
+	<select id="selectSchoolByCondition" parameterType="com.qingshu.school.entity.School" resultType="School">
+	select * from school 
+		<where>
+	      <if test="name != null" >
+	        name like concat("%",#{name,jdbcType=VARCHAR},"%")
+	      </if>
+	      <if test="symbol != null" >
+	        and symbol = #{symbol,jdbcType=VARCHAR}
+	      </if>
+	      <if test="categoryId != null" >
+	        and category_id = #{categoryId,jdbcType=INTEGER}
+	      </if>
+	      <if test="phone != null" >
+	        and phone like concat("%",#{phone,jdbcType=VARCHAR},"%")
+	      </if>
+	      <if test="email != null" >
+	        and email like concat("%",{email,jdbcType=VARCHAR},"%")
+	      </if>
+	      <if test="alipayEmail != null" >
+	        and alipay_email like concat("%",#{alipayEmail,jdbcType=VARCHAR},"%")
+	      </if>
+	      <if test="address != null" >
+	        and address like concat("%",#{address,jdbcType=VARCHAR},"%")
+	      </if>     
+	      <if test="status != null" >
+	        and status = #{status,jdbcType=INTEGER}
+	      </if>
+	      <if test="applerId != null" >
+	        and appler_id = #{applerId,jdbcType=INTEGER}
+	      </if>
+	      <if test="updaterId != null" >
+	        and updater_id = #{updaterId,jdbcType=INTEGER}
+	      </if>
+	      <if test="id != null" >
+	        and id = #{schoolId,jdbcType=INTEGER}
+	     </if>      
+	    </where>
+	</select>
+	
+	<insert id="insertSchool" parameterType="com.qingshu.school.entity.School" >
+	<selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+		select LAST_INSERT_ID()
+	</selectKey>
+    insert into global.school
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="symbol != null" >
+        symbol,
+      </if>
+      <if test="categoryId != null" >
+        category_id,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="alipayEmail != null" >
+        alipay_email,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="logoUrl != null" >
+        logo_url,
+      </if>
+      <if test="certiInfoUrl != null" >
+        certi_info_url,
+      </if>
+      <if test="bannerImageIds != null" >
+        banner_image_ids,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="applerId != null" >
+        appler_id,
+      </if>
+      <if test="applyTime != null" >
+        apply_time,
+      </if>
+      <if test="updaterId != null" >
+        updater_id,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="introduction != null" >
+        introduction,
+      </if>
+      <if test="introductionDetail != null" >
+        introduction_detail,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="symbol != null" >
+        #{symbol,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryId != null" >
+        #{categoryId,jdbcType=INTEGER},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="alipayEmail != null" >
+        #{alipayEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="logoUrl != null" >
+        #{logoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="certiInfoUrl != null" >
+        #{certiInfoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="bannerImageIds != null" >
+        #{bannerImageIds,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="applerId != null" >
+        #{applerId,jdbcType=INTEGER},
+      </if>
+      <if test="applyTime != null" >
+        #{applyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updaterId != null" >
+        #{updaterId,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="introduction != null" >
+        #{introduction,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="introductionDetail != null" >
+        #{introductionDetail,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+ 
+  <insert id="insertSchoolDbSetting" parameterType="SchoolDbSetting" >
+    insert into npdb.school_db_setting
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="schoolId != null" >
+        school_id,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="driverClassName != null" >
+        driver_class_name,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="initialSize != null" >
+        initial_size,
+      </if>
+      <if test="maxActive != null" >
+        max_active,
+      </if>
+      <if test="maxIdle != null" >
+        max_idle,
+      </if>
+      <if test="validationQuery != null" >
+        validation_query,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="createdTime != null" >
+        created_time,
+      </if>
+      <if test="updatedTime != null" >
+        updated_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="schoolId != null" >
+        #{schoolId,jdbcType=INTEGER},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="driverClassName != null" >
+        #{driverClassName,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="initialSize != null" >
+        #{initialSize,jdbcType=INTEGER},
+      </if>
+      <if test="maxActive != null" >
+        #{maxActive,jdbcType=INTEGER},
+      </if>
+      <if test="maxIdle != null" >
+        #{maxIdle,jdbcType=INTEGER},
+      </if>
+      <if test="validationQuery != null" >
+        #{validationQuery,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=BIT},
+      </if>
+      <if test="createdTime != null" >
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedTime != null" >
+        #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+   <insert id="insertSchoolModule_degree" parameterType="java.lang.Integer">
+   		insert 	 npdb.school_module(school_id, role_id, module_id, parent_module_id, `order`, show_in_homepage, show_in_nav)
+		select   #{id}, role_id, module_id, parent_module_id, `order`, show_in_homepage, show_in_nav
+		from 	 npdb.school_module
+		where 	 school_id =1;
+   </insert>
+   <insert id="insertSchoolModule_peixun" parameterType="java.lang.Integer">
+   		insert 	 npdb.school_module(school_id, role_id, module_id, parent_module_id, `order`, show_in_homepage, show_in_nav)
+		select   #{id}, role_id, module_id, parent_module_id, `order`, show_in_homepage, show_in_nav
+		from 	 npdb.school_module
+		where 	 school_id =1749;
+   </insert>
+</mapper>
+
